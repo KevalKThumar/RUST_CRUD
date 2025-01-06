@@ -1,8 +1,7 @@
 use crate::User;
 use axum::{http::StatusCode, response::IntoResponse, Json};
-use bson::doc;
 use futures::TryStreamExt;
-use mongodb::{Client, Collection};
+use mongodb::{bson::doc, Client, Collection};
 /// Function to get all users from the database
 pub async fn get_all_users(client: Client) -> impl IntoResponse {
     let my_coll: Collection<User> = client.database("llm").collection("users");

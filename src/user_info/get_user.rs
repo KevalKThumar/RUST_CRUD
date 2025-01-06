@@ -1,6 +1,5 @@
 use axum::{extract::Path, http::StatusCode, response::IntoResponse, Json};
-use bson::{doc, oid::ObjectId};
-use mongodb::{Client, Collection};
+use mongodb::{bson::{doc, oid::ObjectId}, Client, Collection};
 
 use crate::User;
 

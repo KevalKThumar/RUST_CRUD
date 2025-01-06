@@ -1,7 +1,6 @@
 use crate::User;
 use axum::{http::StatusCode, response::IntoResponse, Json};
-use bson::doc;
-use mongodb::{Client, Collection};
+use mongodb::{bson::doc, Client, Collection};
 
 /// Function to add a user and return the result as an HTTP response
 pub async fn add_user(

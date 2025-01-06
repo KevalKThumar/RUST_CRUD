@@ -1,7 +1,6 @@
 use crate::User;
 use axum::{extract::Path, http::StatusCode, response::IntoResponse, Json};
-use bson::{doc, oid::ObjectId};
-use mongodb::{Client, Collection};
+use mongodb::{bson::{doc, oid::ObjectId}, Client, Collection};
 
 /// Delete a user by ID from the database
 pub async fn delete_user(

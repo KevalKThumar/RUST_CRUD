@@ -22,13 +22,12 @@ struct User {
     role: Option<String>,
     number: Option<String>,
 }
-
 /// Main function to run the server and define the routes
 #[tokio::main]
 async fn main() -> mongodb::error::Result<()> {
     dotenv().ok();
     let mongo_uri = std::env::var("MONGODB_URI").expect("MONGODB_URI must be set");
-    let port = std::env::var("PORT").unwrap_or_else(|_| "3000".to_string());
+    let port: String = std::env::var("PORT").unwrap_or_else(|_| "3000".to_string());
     let client = Client::with_uri_str(mongo_uri).await?;
 
     let app = Router::new()
