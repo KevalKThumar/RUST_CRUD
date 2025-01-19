@@ -1,5 +1,5 @@
 use axum::{
-    routing::{get, post, put, delete},
+    routing::{delete, get, patch, post},
     Router,
 };
 use dotenv::dotenv;
@@ -8,11 +8,10 @@ use serde::{Deserialize, Serialize};
 use std::net::SocketAddr;
 // Import the user_info module
 mod user_info;
-use user_info::add_user::add_user;
-use user_info::delete_user::delete_user;
-use user_info::get_all_users::get_all_users;
-use user_info::get_user::get_user;
-use user_info::update_user::update_user;
+use user_info::{
+    add_user::add_user, delete_user::delete_user, get_all_users::get_all_users, get_user::get_user,
+    update_user::update_user,
+};
 
 #[derive(Serialize, Deserialize, Debug, Clone)]
 struct User {
@@ -46,7 +45,7 @@ async fn main() -> mongodb::error::Result<()> {
         })
         .route("/update-user/{id}", {
             let client = client.clone();
-            put(move |id, body| update_user(id, body, client))
+            patch(move |id, body| update_user(id, body, client))
         })
         .route("/delete-user/{id}", {
             let client = client.clone();

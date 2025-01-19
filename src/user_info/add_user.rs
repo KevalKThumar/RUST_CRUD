@@ -9,6 +9,20 @@ pub async fn add_user(
 ) -> impl IntoResponse {
     let my_coll: Collection<User> = client.database("llm").collection("users");
 
+    // check if the user already exists
+    if let Ok(document) = my_coll
+        .find_one(doc! { "name" : user.name.clone(), "email": user.email.clone() ,})
+        .await
+    {
+        if document.is_some() {
+            return (
+                StatusCode::CONFLICT,
+                Json(doc! { "message": "User already exists" }),
+            )
+                .into_response();
+        }
+    }
+
     match my_coll.insert_one(user).await {
         Ok(res) => {
             // Return inserted ID as a success response
